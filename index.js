@@ -1,8 +1,17 @@
+const cors = require('cors');
 const app = require('express')();
 const port = 3000;
 const mongoose = require('mongoose');
 
-app.get('/', (req, res) => res.json({ testKey: 'testValue' }));
+let corsOptions = {
+    origin: 'http://localhost:4200',
+    methods: ['GET'],
+    allowedHeaders: ['Content-Type']
+}
+
+app.use(cors(corsOptions));
+
+app.get('/', (req, res, next) => res.json({ testKey: 'testValue' }));
 
 mongoose.connect('mongodb://localhost:27017/cmr-app-db', { useNewUrlParser: true });
 
